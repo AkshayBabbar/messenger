@@ -21,33 +21,43 @@ public class MessageResource {
     private MessageService messageService = new MessageService();
 
     @GET
-    public List<Message> getMessages(){
+    public List<Message> getMessages(@QueryParam("year") int year,
+                                     @QueryParam("start") int start,
+                                     @QueryParam("size") int size)
+
+    {
+        if (year >= 0) {
+            return messageService.getAllMessgesYear(year);
+        }
+        if (start > 0 && size > 0)
+            return messageService.getAllPaginated(start, size);
         return messageService.getAllMessage();
     }
 
     @GET
     @Path("/{messageId}")
-    public Message getMesesage(@PathParam("messageId") long Id){
+    public Message getMesesage(@PathParam("messageId") long Id) {
 //        messageService.getMessage()
-    return messageService.getMessage(Id);
+        return messageService.getMessage(Id);
     }
 
     @POST
-    public Message addMessage(Message message){
+    public Message addMessage(Message message) {
 
         return messageService.addMessage(message);
 
     }
+
     @PUT
     @Path("/{messageId}")
-    public Message pushMessage(@PathParam("messageId") long Id,Message message){
+    public Message pushMessage(@PathParam("messageId") long Id, Message message) {
         message.setId(Id);
         return messageService.updateMessage(message);
     }
 
     @DELETE
     @Path("/{messageId}")
-    public Message deleteMessage(@PathParam("messageId") long id){
+    public Message deleteMessage(@PathParam("messageId") long id) {
         return messageService.removeMessage(id);
     }
 

@@ -21,6 +21,7 @@ public class Profile {
         this.firstName = firstName;
         this.lastname = lastname;
     }
+    public Profile(){}
 
     public long getId() {
         return id;

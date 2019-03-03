@@ -5,6 +5,7 @@ import org.akshay.messenger.database.DatabaseClass;
 import org.akshay.messenger.model.Message;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -17,8 +18,27 @@ public class MessageService {
     }
 
     public List<Message> getAllMessage(){
-        return new ArrayList<Message>(messages.values());
+        return new ArrayList<>(messages.values());
     }
+    public List<Message> getAllMessgesYear(int year){
+        List<Message> messagesForYear = new ArrayList<>();
+        Calendar cal = Calendar.getInstance();
+        for (Message message :
+                messages.values()) {
+            cal.setTime(message.getCreated());
+            if(cal.get(Calendar.YEAR) == year)
+                messagesForYear.add(message);
+
+        }
+        return messagesForYear;
+    }
+
+    public List<Message> getAllPaginated(int start, int size){
+        ArrayList<Message> list = new ArrayList<>(messages.values());
+        if(start + size> list.size()) return  new ArrayList<>();
+        return list.subList(start, start + size);
+    }
+
     public Message addMessage(Message message){
         message.setId(messages.size() + 1);
         messages.put(message.getId(),message);
