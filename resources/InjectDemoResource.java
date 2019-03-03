@@ -1,10 +1,7 @@
 package org.akshay.messenger.resources;
 
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 @Path("/injectDemo")
@@ -14,8 +11,11 @@ public class InjectDemoResource {
 
     @GET
     @Path("annotations")
-    public String getParamUsingAnnotations(){
-        return "Test";
+    public String getParamUsingAnnotations(@MatrixParam("param") String matrixParam,
+                                           @HeaderParam("CustomerHeadParam") String CustomerHeadParam,
+                                           @CookieParam("Cookie") String cookie) {
+
+        return "Matrix Param " + matrixParam + "CustomerHead Parameter is " + CustomerHeadParam  + "Cookie: " + cookie;
     }
 
 }
