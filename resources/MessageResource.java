@@ -21,16 +21,14 @@ public class MessageResource {
     private MessageService messageService = new MessageService();
 
     @GET
-    public List<Message> getMessages(@QueryParam("year") int year,
-                                     @QueryParam("start") int start,
-                                     @QueryParam("size") int size)
+    public List<Message> getMessages(@BeanParam MessageFilterBean messageFilterBean)
 
     {
-        if (year >= 0) {
-            return messageService.getAllMessgesYear(year);
+        if (messageFilterBean.getYear() >= 0) {
+            return messageService.getAllMessgesYear(messageFilterBean.getYear());
         }
-        if (start > 0 && size > 0)
-            return messageService.getAllPaginated(start, size);
+        if (messageFilterBean.getStart() > 0 && messageFilterBean.getSize() > 0)
+            return messageService.getAllPaginated(messageFilterBean.getStart(), messageFilterBean.getSize());
         return messageService.getAllMessage();
     }
 
